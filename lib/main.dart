@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(const MyApp());
@@ -120,6 +121,10 @@ class _CalculadoraImcState extends State<CalculadoraImc> {
               width: 85,
               height: 40,
               child: TextField(
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
+                  LengthLimitingTextInputFormatter(4),
+                ],
                 controller: pesoController,
                 style: TextStyle(fontSize: 16),
                 decoration: InputDecoration(
@@ -130,7 +135,7 @@ class _CalculadoraImcState extends State<CalculadoraImc> {
                   labelText: 'Peso',
                   suffixText: 'kg',
                 ),
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
               ),
             ),
             SizedBox(width: 32, child: Icon(Icons.arrow_forward, size: 22)),
@@ -138,6 +143,10 @@ class _CalculadoraImcState extends State<CalculadoraImc> {
               width: 85,
               height: 40,
               child: TextField(
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
+                  LengthLimitingTextInputFormatter(4),
+                ],
                 controller: alturaController,
                 style: TextStyle(fontSize: 16),
                 decoration: InputDecoration(
@@ -148,7 +157,7 @@ class _CalculadoraImcState extends State<CalculadoraImc> {
                   labelText: 'Altura',
                   suffixText: 'm',
                 ),
-                keyboardType: TextInputType.number,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
               ),
             ),
           ],
@@ -172,7 +181,7 @@ class _CalculadoraImcState extends State<CalculadoraImc> {
                 });
               } on Exception {
                 setState(() {
-                  message = 'Todos os valores\ndevem ser numéricos';
+                  message = 'Digite os valores';
                   colorResult = Colors.red;
                   imc = null;
                   category = null;
