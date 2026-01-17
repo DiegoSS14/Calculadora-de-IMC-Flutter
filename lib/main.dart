@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'Calculadora de IMC',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
       home: CalculadoraImc(),
     );
@@ -51,6 +51,9 @@ class _CalculadoraImcState extends State<CalculadoraImc> {
   String? category;
   Color colorResult = Colors.green;
   String message = 'Digite o seu peso\ne a sua altura';
+
+  double valorPeso = 75;
+  double valorAltura = 1.70;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -117,47 +120,107 @@ class _CalculadoraImcState extends State<CalculadoraImc> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              width: 85,
-              height: 40,
-              child: TextField(
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
-                  LengthLimitingTextInputFormatter(4),
-                ],
-                controller: pesoController,
-                style: TextStyle(fontSize: 16),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(150),
+            Expanded(
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: 96,
+                    height: 40,
+                    child: TextField(
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                          RegExp(r'^\d*\.?\d*$'),
+                        ),
+                        LengthLimitingTextInputFormatter(4),
+                      ],
+                      controller: pesoController,
+                      style: TextStyle(fontSize: 16),
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(150),
+                        ),
+                        // labelText: 'Peso',
+                        labelText: 'Peso',
+                        suffixText: 'kg',
+                      ),
+                      keyboardType: TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                    ),
                   ),
-                  // labelText: 'Peso',
-                  labelText: 'Peso',
-                  suffixText: 'kg',
-                ),
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  SliderTheme(
+                    data: SliderThemeData(
+                      trackHeight: 2,
+                      activeTrackColor: Colors.purple,
+                    ),
+                    child: Slider(
+                      value: valorPeso,
+                      onChanged: (peso) {
+                        setState(() {
+                          valorPeso = peso;
+                          pesoController.text = valorPeso.toStringAsFixed(1);
+                        });
+                      },
+                      semanticFormatterCallback: (value) =>
+                          '${valorPeso.toStringAsFixed(1)}kg',
+                      min: 30,
+                      max: 300,
+                    ),
+                  ),
+                ],
               ),
             ),
-            SizedBox(width: 32, child: Icon(Icons.arrow_forward, size: 22)),
-            SizedBox(
-              width: 85,
-              height: 40,
-              child: TextField(
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*$')),
-                  LengthLimitingTextInputFormatter(4),
-                ],
-                controller: alturaController,
-                style: TextStyle(fontSize: 16),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(150),
+            SizedBox(width: 6),
+            Expanded(
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: 96,
+                    height: 40,
+                    child: TextField(
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                          RegExp(r'^\d*\.?\d*$'),
+                        ),
+                        LengthLimitingTextInputFormatter(4),
+                      ],
+                      controller: alturaController,
+                      style: TextStyle(fontSize: 16),
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(150),
+                        ),
+                        // labelText: 'Peso',
+                        labelText: 'Altura',
+                        suffixText: 'm',
+                      ),
+                      keyboardType: TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                    ),
                   ),
-                  // labelText: 'Peso',
-                  labelText: 'Altura',
-                  suffixText: 'm',
-                ),
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  SliderTheme(
+                    data: SliderThemeData(
+                      trackHeight: 2,
+                      activeTrackColor: Colors.purple,
+                    ),
+                    child: Slider(
+                      value: valorAltura,
+                      onChanged: (altura) {
+                        setState(() {
+                          valorAltura = altura;
+                          alturaController.text = valorAltura.toStringAsFixed(
+                            2,
+                          );
+                        });
+                      },
+                      semanticFormatterCallback: (value) =>
+                          '${valorAltura.toStringAsFixed(2)} m',
+                      min: 0.6,
+                      max: 4.0,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -189,6 +252,11 @@ class _CalculadoraImcState extends State<CalculadoraImc> {
               }
             },
             child: Text('Calcular'),
+            style: FilledButton.styleFrom(
+              backgroundColor: Colors.purple,
+              elevation: 4,
+              shadowColor: Colors.grey[100],
+            ),
           ),
         ),
       ],
