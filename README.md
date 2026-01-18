@@ -32,3 +32,14 @@ flutter run
 ---
 
 Feito como meu primeiro app em Flutter — simples, porém com muitos conceitos interessantes e um ótimo aprendizado. ✅
+
+## 🎬 Demonstração — vídeo do teste
+
+Abaixo há um curto vídeo que gravei durante o teste da aplicação. Ele mostra a entrada de dados, o cálculo do IMC e as respostas visuais conforme a categoria.
+
+<video controls width="640">
+	<source src="assets/calculadora_imc 2026-01-17 02-05-27.mp4" type="video/mp4">
+	Seu navegador não suporta vídeo.
+</video>
+
+````
